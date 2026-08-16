@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement style="flex-grow: 1;">
+        <ui:VisualElement name="Condition" style="flex-grow: 1;">
+            <ui:Button text="Play" style="align-self: center; justify-content: flex-start; -unity-text-align: middle-center; height: 59px; width: 100px; text-overflow: ellipsis; flex-grow: 0; opacity: 1; -unity-background-scale-mode: stretch-to-fill;"/>
+            <ui:Button text="Quit" style="align-self: center; height: 58px; width: 98px;"/>
+            <ui:Button text="Options" style="height: 67px; width: 96px; align-self: center;"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
