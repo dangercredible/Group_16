@@ -1,0 +1,10 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/MainMenuStyle.uss?fileID=7433441132597879392&amp;guid=f44a2d80b486cb14fb0420567e732c9d&amp;type=3#MainMenuStyle"/>
+    <ui:VisualElement name="Container" style="flex-grow: 1; background-color: rgb(132, 110, 151);">
+        <ui:Image name="Background" source="project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=-1087164816274819069&amp;guid=e750b49aadc16714cbe9f515bf52ff64&amp;type=3#arrow-right@2x"/>
+        <ui:Label text="Main Menu" class="header" style="align-self: center; margin-top: 71px; font-size: 150px; margin-bottom: 22px; -unity-font-style: normal; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=2230732570650464555&amp;guid=e750b49aadc16714cbe9f515bf52ff64&amp;type=3#NotInter-Regular&quot;); color: rgb(255, 255, 255);"/>
+        <ui:Button text="Play" name="StartGameButton" class="button" style="-unity-font-style: normal; height: 126px; width: 322px; -unity-background-image-tint-color: rgb(255, 71, 71); background-color: rgb(255, 243, 188);"/>
+        <ui:Button text="Settings" name="Settings" class="button" style="margin-top: 50px; width: 322px; height: 126px; background-color: rgb(255, 243, 188);"/>
+        <ui:Button text="Quit" name="Quit" class="button" style="margin-top: 50px; width: 322px; height: 126px; background-color: rgb(255, 243, 188);"/>
+    </ui:VisualElement>
+</ui:UXML>
