@@ -2,12 +2,12 @@
 }
 
 .header {
-    font-size: 40px;
+    font-size: 100px;
     color: rgb(255, 255, 255);
 }
 
 .button {
-    font-size: 20px;
+    font-size: 40px;
     width: 220px;
     height: 60px;
     align-self: center;
@@ -16,9 +16,18 @@
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
-    -unity-background-image-tint-color: rgb(255, 255, 255);
+    -unity-background-image-tint-color: rgb(255, 23, 23);
     align-content: flex-start;
-    margin-top: 50px;
+    margin-top: 48px;
+    -unity-font-style: normal;
+    max-width: 323px;
+    min-width: 181px;
+    max-height: 182px;
+    min-height: 69px;
+    opacity: 1;
+    -unity-text-outline-color: rgb(255, 214, 214);
+    color: rgb(0, 0, 0);
+    -unity-text-align: middle-center;
 }
 
 .button:hover {
