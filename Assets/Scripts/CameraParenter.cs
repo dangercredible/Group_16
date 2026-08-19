@@ -1,67 +1,66 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace FPSStarter
 {
     /// <summary>
-    /// Drop this component onto any GameObject in your scene (e.g. an empty
-    /// "Bootstrap" object). On Play it will:
-    ///   1. Disable every existing Camera in the scene (the orphan Main Camera).
-    ///   2. Spawn a Player capsule with a CharacterController.
-    ///   3. Create a "View Camera" child at eye height (y = 1.6 m), exactly
-    ///      like the Framework's FpsStarterBootstrap.CreatePlayer().
-    ///   4. Add FirstPersonController, PlayerInteractor and AudioListener so
-    ///      mouse-look and interaction work immediately.
+    /// Automatically builds a first-person player with camera in every gameplay
+    /// scene, exactly like the Framework's FpsStarterBootstrap.CreatePlayer().
     ///
-    /// You only need this if you are NOT using FpsStarterBootstrap.
-    /// If FpsStarterBootstrap is already in the scene, remove this component.
+    /// Uses [RuntimeInitializeOnLoadMethod] so it runs without needing any
+    /// component in the scene — just having this script in the project is enough.
+    ///
+    /// Skips menu scenes ("Main Menu", "PauseMenu", "LoadingScene") so they
+    /// keep their own cameras.
     /// </summary>
-    public sealed class CameraParenter : MonoBehaviour
+    public static class PlayerBuilder
     {
-        [Header("Spawn")]
-        [Tooltip("World position to place the player at the start of the scene.")]
-        [SerializeField] private Vector3 spawnPosition = new Vector3(0f, 1f, -7f);
+        private static readonly string[] SkipScenes = { "Main Menu", "PauseMenu", "LoadingScene" };
 
-        [Header("Capsule")]
-        [SerializeField] private float capsuleRadius = 0.35f;
-        [SerializeField] private float capsuleHeight = 1.8f;
-
-        [Header("Camera")]
-        [SerializeField] private float eyeHeight = 1.6f;
-        [SerializeField] private float nearClipPlane = 0.03f;
-
-        private void Awake()
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+        private static void OnSceneLoaded()
         {
-            // Disable every existing camera so we start clean.
-            foreach (Camera cam in FindObjectsByType<Camera>(FindObjectsSortMode.None))
-                cam.gameObject.SetActive(false);
+            string sceneName = SceneManager.GetActiveScene().name;
+            foreach (string skip in SkipScenes)
+                if (sceneName == skip) return;
 
-            BuildPlayer();
+            // Don't double-build if a player already exists.
+            if (GameObject.FindWithTag("Player") != null) return;
+            if (Object.FindFirstObjectByType<FirstPersonController>() != null) return;
+
+            Build();
         }
 
-        private void BuildPlayer()
+        private static void Build()
         {
-            // --- player root ---
+            // Disable all existing cameras (the orphan "Main Camera" etc.).
+            foreach (Camera cam in Object.FindObjectsByType<Camera>(FindObjectsSortMode.None))
+                cam.gameObject.SetActive(false);
+
+            // --- Player root with capsule ---
             GameObject player = new GameObject("Player");
             player.tag = "Player";
-            player.transform.position = spawnPosition;
+            player.transform.position = new Vector3(0f, 1f, -7f);
 
             CharacterController cc = player.AddComponent<CharacterController>();
-            cc.radius = capsuleRadius;
-            cc.height = capsuleHeight;
+            cc.radius = 0.35f;
+            cc.height = 1.8f;
 
-            // --- view camera child (the Framework pattern) ---
+            // --- View Camera child at eye height ---
             GameObject viewObj = new GameObject("View Camera");
             viewObj.transform.SetParent(player.transform);
-            viewObj.transform.localPosition = new Vector3(0f, eyeHeight, 0f);
+            viewObj.transform.localPosition = new Vector3(0f, 1.6f, 0f);
             viewObj.transform.localRotation = Quaternion.identity;
             viewObj.tag = "MainCamera";
 
-            Camera cam2 = viewObj.AddComponent<Camera>();
-            cam2.nearClipPlane = nearClipPlane;
+            Camera camera = viewObj.AddComponent<Camera>();
+            camera.nearClipPlane = 0.03f;
+            camera.backgroundColor = new Color(0.035f, 0.035f, 0.035f);
 
             viewObj.AddComponent<AudioListener>();
 
-            // Add FPS components AFTER the view child exists so Awake() finds it.
+            // Add FPS components AFTER the camera child exists
+            // so FirstPersonController.Awake() finds it via GetComponentInChildren<Camera>().
             player.AddComponent<FirstPersonController>();
             player.AddComponent<PlayerInteractor>();
         }
