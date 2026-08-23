@@ -298,6 +298,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rotating table
       objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: 62432ea2142b1fc448e8c359b579ebbb, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c6653ae5b6e68fe4babad8bf92860f38, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: -8700617353114198275, guid: 62432ea2142b1fc448e8c359b579ebbb, type: 3}
