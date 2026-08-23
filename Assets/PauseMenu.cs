@@ -1,11 +1,14 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
+
 public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseMenu;
     public GameObject settingsPanel;
     public GameObject controlsPanel;
     public GameObject pausebutton;
+
     public void OpenSettings()
     {
         settingsPanel.SetActive(true);
@@ -19,13 +22,12 @@ public class PauseMenu : MonoBehaviour
         pauseMenu.SetActive(true);
         pausebutton.SetActive(false);
     }
-    
+
     public void OpenControls()
     {
         settingsPanel.SetActive(false);
         controlsPanel.SetActive(true);
         pausebutton.SetActive(false);
-
     }
 
     public void CloseControls()
@@ -48,7 +50,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         pausebutton.SetActive(true);
     }
-    
+
     public void QuitGame()
     {
         Time.timeScale = 1f;
@@ -57,7 +59,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
         {
             if (Time.timeScale == 1f)
             {
