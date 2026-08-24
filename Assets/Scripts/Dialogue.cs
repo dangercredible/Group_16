@@ -11,6 +11,9 @@ public class Dialogue : MonoBehaviour
 
     public Image characterImage;
 
+    // Panel that appears after the dialogue is finished
+    public GameObject levelChoicePanel;
+
     private int index;
     private bool isTyping;
 
@@ -18,8 +21,11 @@ public class Dialogue : MonoBehaviour
     {
         textComponent.text = string.Empty;
 
-        
+        // Show character at the start
         characterImage.gameObject.SetActive(true);
+
+        // Make sure level choice panel is hidden
+        levelChoicePanel.SetActive(false);
 
         StartDialogue();
     }
@@ -30,6 +36,7 @@ public class Dialogue : MonoBehaviour
         {
             if (isTyping)
             {
+                // Instantly finish the current line
                 StopAllCoroutines();
 
                 textComponent.text = lines[index];
@@ -37,6 +44,7 @@ public class Dialogue : MonoBehaviour
             }
             else
             {
+                // Move to the next line
                 NextLine();
             }
         }
@@ -65,6 +73,7 @@ public class Dialogue : MonoBehaviour
 
     void NextLine()
     {
+        // If there are still lines left
         if (index < lines.Length - 1)
         {
             index++;
@@ -75,11 +84,16 @@ public class Dialogue : MonoBehaviour
         }
         else
         {
-         
+            // Dialogue is completely finished
+
+            // Hide the character
             characterImage.gameObject.SetActive(false);
 
-            
+            // Hide the dialogue panel
             gameObject.SetActive(false);
+
+            // Show the level choice panel
+            levelChoicePanel.SetActive(true);
         }
     }
 }
